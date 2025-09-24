@@ -1,4 +1,4 @@
-# How to contribute 1
+# How to contribute
 
 Thanks for taking the time to contribute! :heart:
 
