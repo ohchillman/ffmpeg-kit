@@ -1,6 +1,15 @@
 name: ios build scripts
 
 on:
+  # ✅ Ручной запуск через Actions → Run workflow
+  workflow_dispatch:
+    inputs:
+      ffmpeg_version:
+        description: "FFmpeg version to build (пример: n7.0.2, или latest)"
+        required: false
+        default: "latest"
+
+  # ✅ Автоматический запуск при пушах в указанные ветки
   push:
     branches:
       - development
@@ -13,6 +22,8 @@ on:
       - 'tools/**'
       - 'apple.sh'
       - 'ios.sh'
+
+  # ✅ Автоматический запуск при pull_request в указанные ветки
   pull_request:
     branches:
       - development
@@ -50,6 +61,7 @@ jobs:
       - name: print ffbuild logs
         if: ${{ failure() }}
         run: '[[ -f ./src/ffmpeg/ffbuild/config.log ]] && tail -50 ./src/ffmpeg/ffbuild/config.log'
+
   build-main-on-macos-ventura:
     name: ios main on ventura
     runs-on: macos-13
@@ -73,6 +85,7 @@ jobs:
       - name: print ffbuild logs
         if: ${{ failure() }}
         run: '[[ -f ./src/ffmpeg/ffbuild/config.log ]] && tail -50 ./src/ffmpeg/ffbuild/config.log'
+
   build-lts-on-macos-monterey:
     name: ios lts on monterey
     runs-on: macos-12
